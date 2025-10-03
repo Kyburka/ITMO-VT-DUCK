@@ -31,7 +31,7 @@ class Main {
         float x[] = new float[X_LENGTH];  
         Random random = new Random();  
         for (int i = 0; i < x.length; i++) {  
-            x[i] = MAX_RANDOM * random.nextFloat() + MIN_RANDOM; // random.nextFloat() - от 0.0 до 1.0. Умножая на MAX_RANDOM, становится от 0.0 до MAX_RANDOM. Прибавляя MIN_RANDOM, становится от MIN_RANDOM до MAX_RANDOM. 
+            x[i] = MAX_RANDOM * random.nextFloat() + MIN_RANDOM; // random.nextFloat() - от 0.0 до 1.0. Умножая на MAX_RANDOM, становится от 0.0 до MAX_RANDOM. Прибавляя MIN_RANDOM, становится от MIN_RANDOM до MAX_RANDOM-MIN_RANDOM. 
         }  
         float[][] w1 = new float[W1_ROWS][W1_COLS];  
         for (int i = 0; i < w1.length; i++) {  
