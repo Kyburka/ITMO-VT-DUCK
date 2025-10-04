@@ -96,8 +96,7 @@ class Main {
             }
         }
         catch (IOException error) {
-            System.out.println("Error!");
-            error.printStackTrace();
+            System.out.println("Error!" + error.getMessage());
         }
     }
 
@@ -117,8 +116,7 @@ class Main {
             System.out.println("Done!");
         }
         catch (IOException error) {
-            System.out.println("Error!");
-            error.printStackTrace();
+            System.out.println("Error!" + error.getMessage());
         }
     }
 
@@ -167,13 +165,11 @@ class Main {
                 writeMatrix(w1, fileName);
             }
             catch (IOException error) {
-                System.out.println("Error!");
-                error.printStackTrace();
+                System.out.println("Error!" + error.getMessage());
             }
         }
         catch (IOException error) {
-            System.out.println("Error!");
-            error.printStackTrace();
+            System.out.println("Error!" + error.getMessage());
         }
     }
 
@@ -191,8 +187,7 @@ class Main {
             System.out.println("Done!");
         }
         catch (IOException error) {
-            System.out.println("Error!");
-            error.printStackTrace();
+            System.out.println("Error!" + error.getMessage());
         }
 
     }
@@ -215,8 +210,7 @@ class Main {
             fileReader.close();
         }
         catch (IOException error) {
-            System.out.println("Error!");
-            error.printStackTrace();
+            System.out.println("Error!" + error.getMessage());
         }
     }
 }
