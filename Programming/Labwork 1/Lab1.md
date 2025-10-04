@@ -207,7 +207,7 @@ class Main {
                 FileWriter fileWriter = new FileWriter(fileName + ".txt");
                 Random random = new Random();
                 for (int i = 0; i < length; i++) {
-                    fileWriter.write(String.format(Locale.US, "%.1f", maxRandom * random.nextFloat() + minRandom));
+                    fileWriter.write(String.format(Locale.US, "%.1f", (maxRandom - minRandom) * random.nextFloat() + minRandom));
                     if (i != length - 1) {
                         fileWriter.write(" ");
                     }
