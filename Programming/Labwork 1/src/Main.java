@@ -207,7 +207,7 @@ class Main {
             while((line = bufferedReader.readLine()) != null) {
                 parts = line.split("\\s+");
                 for (int i = 0; i < parts.length; i++) {
-                    System.out.printf(parts[i]);
+                    System.out.printf(parts[i] + " ");
                 }
                 System.out.printf("\n");
             }
