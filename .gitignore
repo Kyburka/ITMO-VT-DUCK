@@ -34,3 +34,7 @@ bin/
 
 ### Obsidian ###
 .obsidian/
+
+### LibreOffice ###
+/.~lock.*
+*.~lock.*#
