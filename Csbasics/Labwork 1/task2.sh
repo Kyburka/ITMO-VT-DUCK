@@ -1,9 +1,9 @@
 cd ~/lab0/
 cd braviary5
-chmod 440 herdier
-chmod 644 combee
+chmod u=r,g=r,o= herdier
+chmod u=rw,g=r,o=r combee
 chmod 004 vibrava
-chmod 624 stunky
+chmod u=rw, stunky
 cd ~/lab0
 chmod 711 braviary5
 chmod 044 chingling0
