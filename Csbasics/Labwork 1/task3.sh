@@ -1,10 +1,10 @@
 cd ~/lab0/
-ln -s ~/lab0/braviary5 Copy_20
+ln -s braviary5 Copy_20
 chmod 777 cottonee1
-cp cottonee1 lab0/braviary5/herdiercottonee
+cat cottonee1 > braviary5/herdiercottonee
 chmod 006 cottonee1
-ln -s ~/lab0/doduo5 lab0/braviary5/stunkydoduo
-cat lab0/oshawott9/corphish lab0/oshawott9/slowpoke > lab0/doduo5_35
+ln -s doduo5 braviary5/stunkydoduo
+cat oshawott9/corphish oshawott9/slowpoke > doduo5_35
 chmod -R 777 oshawott9
 cp -r oshawott9 oshawott9/beheeyem
 chmod 337 oshawott9/beheeyem
