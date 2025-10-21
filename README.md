@@ -20,4 +20,3 @@ $$
 tg: @kyburka
 vk: @kybrks
 ```
-I am just a freak!
