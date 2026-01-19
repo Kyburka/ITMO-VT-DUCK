@@ -6,11 +6,29 @@ abstract Character {
     #name : String
     #clothing : String
     #arrested : boolean
-    +say() : void
-    +bring() : void
+    #currentlocation : Location
+    +Character(String name, String gender)
+    +getName() : String
+    +getGender() : String
+    +getClothing() : String
+    +getCurrentLocation() : Location
+    +setCurrentLocation(Location newLocation) : void
+    +setClothing(String clothing) : void
+    +isArrested() : boolean
+    +setArrested(boolean arrested) : void
+    +say(String phrase) : void
+    +bring(Object item, Character target) : void
 }
 
 abstract Item {
+    #name : String
+    #location : Location
+    #description : String
+    +Item(String name, Location location, String description)
+    +getName() : String
+    +getLocation() : Location
+    +getDescription() : Description
+    +setLocation(Location location) : void
 
 }
 class Location {
@@ -20,25 +38,25 @@ class Shorty {
     +Shorty(String name, String gender)
 }
 class Policeman {
-    -СДЕЛАТЬ
+    +Policeman(String name, String gender)
 }
 
 class Bridge {
-    -isSleepingPlace : boolean
+    #isSleepingPlace : boolean
     +Bridge()
 }
 class Shiphold {
-    -capacity : int
+    #capacity : int
     +Shiphold()
 }
 class PoliceVan {
     +PoliceVan(Location location)
     +getCurrentLocation() : Location
     +drive(Location location) : void
-    -currentlocation : Location
+    #currentlocation : Location
 }
 class Bowl {
-    -type : BowlType
+    #type : BowlType
     +Bowl(Location location, String food, BowlType type)
 }
 class Barrel {
@@ -86,7 +104,6 @@ skinparam class {
     BackgroundColor<<interface>> LightYellow
     BackgroundColor<<abstract>> LightBlue
 }
-skinparam noteBackgroundColor LightGreen
 
 @enduml
 
