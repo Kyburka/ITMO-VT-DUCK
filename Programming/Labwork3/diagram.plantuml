@@ -1,0 +1,100 @@
+@startuml story
+top to bottom direction
+
+abstract Character {
+    #gender : String
+    #name : String
+    #clothing : String
+    #arrested : boolean
+    +say() : void
+    +bring() : void
+}
+
+abstract Item {
+
+}
+class Location {
+    #name : String
+}
+class Shorty {
+    +Shorty(String name, String gender)
+}
+class Policeman {
+    -СДЕЛАТЬ
+}
+
+class Bridge {
+    -isSleepingPlace : boolean
+    +Bridge()
+}
+class Shiphold {
+    -capacity : int
+    +Shiphold()
+}
+class PoliceVan {
+    +PoliceVan(Location location)
+    +getCurrentLocation() : Location
+    +drive(Location location) : void
+    -currentlocation : Location
+}
+class Bowl {
+    -type : BowlType
+    +Bowl(Location location, String food, BowlType type)
+}
+class Barrel {
+    +Barrel(Location location, String description)
+    +isEmpty() : void
+}
+
+enum BowlType {
+    DEEP,
+    FLAT,
+    SMALL;
+}
+interface CanCry {
+    +cry() : void
+}
+interface CanEat {
+    +eat() : void
+}
+interface CanSoothe {
+    +soothe() : void
+}
+interface CanClimb {
+    +climb() : void
+}
+interface CanArest {
+    +arrest(Character target) : void
+}
+
+Character <|-- Shorty
+Character <|-- Policeman
+
+Location <|-- Bridge
+Location <|-- PoliceVan
+Location <|-- Shiphold
+Item <|-- Bowl
+Item <|-- Barrel
+
+CanCry <|.. Shorty
+CanEat <|.. Shorty
+CanSoothe <|.. Shorty
+CanClimb <|.. Shorty
+CanArest <|.. Policeman
+
+skinparam class {
+    BackgroundColor<<interface>> LightYellow
+    BackgroundColor<<abstract>> LightBlue
+}
+skinparam noteBackgroundColor LightGreen
+
+@enduml
+
+Ему быстро принесли тарелку каши. Он ее съел и сказал: То, что рассказал о Незнайке Пончик, была правда. 
+Во всяком случае, верно было то, что он действительно угодил на Дурацкий остров. 
+После того как Незнайку, Козлика, Клюкву, Мизинчика, Чижика и других коротышек, ночевавших под мостом, 
+задержал полицейский патруль, все они были посажены в полицейский фургон и доставлены в город Лос-Паганос. 
+Там их посадили в трюм корабля, где уже томились сотни три таких же несчастных. 
+Многие из них плакали, прощаясь с родной землей. Глядя на других, и Незнайка заплакал, а какой-то толстенький, 
+голопузенький коротышка взобрался на пустую бочку, стоявшую посреди трюма, и принялся всех утешать. 
+Он был без рубашки и босиком, но зато в соломенной шляпе и с пестрым шерстяным шарфом, обмотанным вокруг шеи. 

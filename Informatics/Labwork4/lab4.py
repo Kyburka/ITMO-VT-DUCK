@@ -1,66 +1,98 @@
-def parse_yml(text):
-    lines = text.split('\n')
-    current_path = []
-    res = {}
+with open('timetable.yml', 'r', encoding='utf-8') as f:
+    lines = f.read().splitlines()
+#lines = open('timetable.yml').read().splitlines()
+lines = [line for line in lines if line.strip() != ""]
+
+def IndentLevel(line):
+    counter = 0
+    while line[counter] == ' ':
+        counter += 1
+    return counter
+
+def parse_yaml(lines):
+    data = {}
+    stack = [(data, -1)]
+    #стэк пар вида контейнер и уровень отступа
 
     for line in lines:
-        if not line.strip() or line.strip() == '#':
-            continue
-        level = 0
-        for char in line:
-            if char == '\t':
-                level += 1
-            else:
-                break    
-        content = line[level:]
-        if ':' in content:
-            key,value = content.split(':', 1)
-            key = key.strip()
-            value = value.strip()
-            while len(current_path) > level:
-                current_path.pop()
-            current_dict = res
-            for key_in_path in current_path:
-                if key_in_path not in current_dict:
-                    current_dict[key_in_path] = {}
-                current_dict = current_dict[key_in_path]
-            if value:
-                current_dict[key] = parse_value(value)
-            else:
-                current_dict[key] = {}
-            current_path.append(key)
-            if value:
-                current_path.pop()
-    return res
+        indent = IndentLevel(line)
+        line = line.strip()
+        #если строка начинается с -, то элемент некого списка
+        if line.startswith('-'):
+            elem = line[1:].strip()
+            #избавляемся от -
+            key, value = elem.split(':', 1)
+            key, value = key.strip(), value.strip().strip('"')
+            item = {key : value} if value else {key: {}}
+            # достаём текущий контейнер
+            while stack and indent <= stack[-1][1]:
+                stack.pop()
 
-def parse_value(value):
-    if value[0] == '[' and value[-1] == ']':
-        content = value[1:-1].strip()
-        if not content:
-            return []
-        else:
-            items = [item.strip() for item in content.split(',')]
-            return [parse_value(item) for item in items]
-    elif (value[0] == '"' and value[-1] == '"') or (value[0] == "'" and value[-1] == "'"):
-        content = value[1:-1].strip()
-        if not content:
-            return ""
-        else:
-            return value[1:-1]
-    elif not value:
-        return ""
-    elif value.strip().isdigit():
-        return int(value.strip())
-    elif value.lower().strip() == "true":
-        return True
-    elif value.lower().strip() == "false":
-            return False
+            current_container = stack[-1][0]
+
+            #если текущий контейнер не список — превращаем в список
+            if not isinstance(current_container, list):
+                #узнаём последний ключ прошлого контейнера
+                old_container = stack[-2][0]
+                last_key = list(old_container.keys())[-1]
+
+                if not isinstance(old_container[last_key], list):
+                    old_container[last_key] = []
+                old_container[last_key].append(item)
+                stack.append((item, indent))
+
+            else:
+                current_container.append(item)
+                stack.append((item, indent))
+
+        #иначе это ключ, у которого значение - словарь, или продолжение элемента списка
+        elif ':' in line:
+            key, value = line.split(':', 1)
+            key, value = key.strip(), value.strip().strip('"')
+
+            # выходим на нужный уровень по отступу
+            while stack and indent <= stack[-1][1]:
+                stack.pop()
+
+            current_container = stack[-1][0]
+
+            if value == "":
+                current_container[key] = {}
+                stack.append((current_container[key], indent))
+            else:
+                current_container[key] = value
+
+    return data
+
+def SerializeToBin(item_to_serialize):
+    result = b''
+
+    #если словарь
+    if isinstance(item_to_serialize, dict):
+        result += b'D' #своя метка dict
+        result += len(item_to_serialize).to_bytes(2, 'big') #записываем также и размер
+        for key, value in item_to_serialize.items():
+            key_b = str(key).encode('utf-8') #кодирует строку в байты, но так как это человекочитаемая кодировка, мы все равно увидим буквы в выводе
+            result += len(key_b).to_bytes(2, 'big') + key_b
+            #рекурсивно делаем то же самое со значением
+            result += SerializeToBin(value)
+
+    #если список
+    elif isinstance(item_to_serialize, list):
+        result += b'L'
+        result += len(item_to_serialize).to_bytes(2, 'big')
+        for item in item_to_serialize:
+            result += SerializeToBin(item)
     else:
-        return value
-    
-s = """
-name: "Test"
-    age: 25
-        gender: True
-"""
-print(parse_yml(s)) 
+        result += b'S'
+        value = str(item_to_serialize).encode('utf-8')
+        result += len(value).to_bytes(2, 'big') + value
+
+    return result
+
+
+data = parse_yaml(lines)
+print(data)
+print(SerializeToBin(data))
+with open('Task1_Binary.bin', 'wb') as f:
+    f.write(SerializeToBin(data))
